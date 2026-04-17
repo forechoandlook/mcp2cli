@@ -33,11 +33,11 @@ curl -fsSL https://raw.githubusercontent.com/forechoandlook/mcp2cli/main/install
   ```
 - **添加服务器** (自动生成描述)：
   ```bash
-  mcp2cli config add stitch <URL> <KEY>
+  mcp2cli config add <alias> <URL> <KEY>
   ```
 - **自定义描述**：
   ```bash
-  mcp2cli config set-desc stitch "我的 UI 设计专家"
+  mcp2cli config set-desc <alias> "功能"
   ```
 
 ### 2. 服务器操作 (以 stitch 为例)

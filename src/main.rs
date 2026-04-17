@@ -4,7 +4,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::io::Read;
+use std::path::{PathBuf};
 use std::env;
 
 const GITHUB_REPO: &str = "forechoandlook/mcp2cli";
@@ -139,9 +140,10 @@ fn update() -> Result<()> {
     let mut bytes = Vec::new();
     resp.body_mut().as_reader().read_to_end(&mut bytes)?;
 
-    self_replace::self_replace_display(&bytes, |prog| {
-        eprintln!("[update] Downloading: {:.1}%", prog * 100.0);
-    })?;
+    let temp_path = env::temp_dir().join("mcp2cli_new");
+    fs::write(&temp_path, &bytes)?;
+    self_replace::self_replace(&temp_path)?;
+    fs::remove_file(&temp_path).ok();
 
     println!("Successfully updated to {}.", latest_v);
     Ok(())
@@ -205,7 +207,7 @@ fn main() -> Result<()> {
                 "inspect" => {
                     let tool_name = args.get(3).context("Need tool name")?;
                     let tools = get_tools_with_cache(alias, &client, false)?;
-                    let tool = tools.as_array().unwrap().iter().find(|t| t["name"] == tool_name).context("Not found")?;
+                    let tool = tools.as_array().unwrap().iter().find(|t| t["name"] == tool_name.as_str()).context("Not found")?;
                     match args.get(4).map(|s| s.as_str()) {
                         Some("--full") => println!("{}", serde_json::to_string_pretty(tool)?),
                         Some("--brief") => print_inspect(tool, true),
