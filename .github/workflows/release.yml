@@ -50,6 +50,7 @@ jobs:
         uses: taiki-e/install-action@cross
 
       - name: Build
+        shell: bash
         run: |
           if [ "${{ matrix.use_cross }}" = "true" ]; then
             cross build --release --target ${{ matrix.target }}
