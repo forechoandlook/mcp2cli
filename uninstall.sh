@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Uninstalling mcp2cli..."
 
-if [[ -f "/usr/local/bin/mcp2cli" ]]; then
-    sudo rm /usr/local/bin/mcp2cli
-    echo "Removed /usr/local/bin/mcp2cli"
+if [[ -f "~/.local/bin/mcp2cli" ]]; then
+    sudo rm ~/.local/bin/mcp2cli
+    echo "Removed ~/.local/bin/mcp2cli"
 fi
 
 # Configuration directory

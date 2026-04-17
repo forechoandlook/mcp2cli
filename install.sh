@@ -27,8 +27,8 @@ if [[ "$OS" == "windows" ]]; then
     mv mcp2cli_tmp mcp2cli.exe
     echo "Installed to current directory as mcp2cli.exe"
 else
-    sudo mv mcp2cli_tmp /usr/local/bin/mcp2cli
-    echo "Installed to /usr/local/bin/mcp2cli"
+    sudo mv mcp2cli_tmp ~/.local/bin/mcp2cli
+    echo "Installed to ~/.local/bin/mcp2cli"
 fi
 
 echo "Installation complete. Try running: mcp2cli list"
