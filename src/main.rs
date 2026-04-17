@@ -130,9 +130,10 @@ fn update() -> Result<()> {
 
     println!("Updating from {} to {}...", VERSION, latest_v);
     
-    let target = if cfg!(target_os = "macos") { "mcp2cli-macos" } 
-                else if cfg!(target_os = "windows") { "mcp2cli-windows.exe" } 
-                else { "mcp2cli-linux" };
+    let arch = if cfg!(target_arch = "x86_64") { "x86_64" } else if cfg!(target_arch = "aarch64") { "arm64" } else { "x86_64" };
+    let target = if cfg!(target_os = "macos") { format!("mcp2cli-macos-{}", arch) } 
+                else if cfg!(target_os = "windows") { format!("mcp2cli-windows-{}.exe", arch) } 
+                else { format!("mcp2cli-linux-{}", arch) };
 
     let bin_url = format!("https://github.com/{}/releases/download/{}/{}", GITHUB_REPO, latest_v, target);
     let mut resp = ureq::get(&bin_url).call()?;

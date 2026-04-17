@@ -7,20 +7,23 @@ on:
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
+    name: Build for ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            binary_name: mcp2cli-linux
+            binary_name: mcp2cli-linux-x86_64
           - os: macos-latest
             target: x86_64-apple-darwin
-            binary_name: mcp2cli-macos
+            binary_name: mcp2cli-macos-x86_64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            binary_name: mcp2cli-macos-arm64
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            binary_name: mcp2cli-windows.exe
+            binary_name: mcp2cli-windows-x86_64.exe
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +41,7 @@ jobs:
       - name: Rename binary
         shell: bash
         run: |
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+          if [[ "${{ matrix.target }}" == *"windows"* ]]; then
             mv target/${{ matrix.target }}/release/mcp2cli.exe ${{ matrix.binary_name }}
           else
             mv target/${{ matrix.target }}/release/mcp2cli ${{ matrix.binary_name }}
@@ -67,10 +70,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            artifacts/mcp2cli-linux
-            artifacts/mcp2cli-macos
-            artifacts/mcp2cli-windows.exe
+          files: artifacts/*
           body: "Release ${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
