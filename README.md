@@ -18,6 +18,7 @@
 ```bash
 curl -fsSL https://raw.githubusercontent.com/forechoandlook/mcp2cli/main/install.sh | bash
 ```
+默认存储路径为 `~/.mcp2cli`
 
 ### Windows (PowerShell)
 下载仓库中的 `mcp2cli-windows.exe` 即可使用。

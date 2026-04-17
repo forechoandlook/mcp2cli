@@ -5,12 +5,6 @@
 ## 🚀 项目概览
 
 - **核心功能**：MCP 服务器的配置（别名管理）、工具发现（list/inspect）和动态调用（call）。
-- **技术栈**：
-    - **语言**：Rust (Edition 2024)
-    - **HTTP 客户端**：`ureq` (同步、轻量级)
-    - **数据处理**：`serde`, `serde_json`
-    - **配置与缓存**：使用 `directories` 遵循 OS 标准路径。
-    - **自更新**：集成 `self-replace` 实现从 GitHub 自主升级。
 - **架构设计**：采用“动态服务器分发”模式，允许直接使用别名作为子命令（例如 `mcp2cli stitch list`）。
 
 ## 🛠 构建与运行
@@ -20,7 +14,7 @@
 1. 更新代码并推送到主分支。
 2. 创建版本标签：`git tag vX.Y.Z`。
 3. 推送标签：`git push origin vX.Y.Z`。
-4. **GitHub Actions** 会自动构建各平台二进制文件（Linux, macOS, Windows）并创建 Release。
+4. **GitHub Actions** 会自动构建各平台二进制文件（Linux, macOS, Windows）并创建 Release。包括x86和arm平台.
 
 ## 📂 目录结构与关键文件
 
